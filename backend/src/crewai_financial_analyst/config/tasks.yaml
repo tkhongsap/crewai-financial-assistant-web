@@ -1,0 +1,25 @@
+research_task:
+  description: >
+    Research and gather all relevant financial data for {topic}.
+    Focus on {focus_areas} and any other significant financial metrics.
+  expected_output: >
+    A detailed research summary with key financial data points and metrics
+  agent: researcher
+
+analysis_task:
+  description: >
+    Analyze the research findings for {topic}, particularly focusing on {focus_areas}.
+    Identify trends, patterns, and potential areas of concern or opportunity.
+  expected_output: >
+    A comprehensive analysis with insights and recommendations
+  agent: analyst
+
+report_task:
+  description: >
+    Create a detailed financial report based on the research and analysis.
+    The report should address {objectives} and provide clear insights on {focus_areas}.
+  expected_output: >
+    A professional financial report in markdown format, including executive summary,
+    key findings, detailed analysis, and recommendations
+  agent: report_writer
+  output_file: output/financial_report.md
