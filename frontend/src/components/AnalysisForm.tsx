@@ -6,6 +6,7 @@ import {
   Textarea,
   Button,
   Box,
+  VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -37,72 +38,78 @@ export const AnalysisForm = ({ onSubmit, isLoading }: AnalysisFormProps) => {
   return (
     <Box 
       as="form" 
-      onSubmit={handleSubmit}
-      bg="white"
-      p={6}
-      borderRadius="lg"
-      shadow="sm"
+      onSubmit={handleSubmit} 
+      width="100%"
       border="1px"
       borderColor="gray.200"
+      borderRadius="lg"
+      p={6}
     >
-      <Stack spacing={6}>
+      <VStack spacing={6} align="stretch">
         <FormControl isRequired>
-          <FormLabel fontSize="md">Analysis Topic</FormLabel>
+          <FormLabel fontSize="sm">Analysis Topic</FormLabel>
           <Input
             name="topic"
-            placeholder="e.g., NVIDIA Financial Report Analysis"
+            placeholder="e.g., Apple Inc. Quarterly Performance, Tesla Market Position, Microsoft Cloud Business"
             value={formData.topic}
             onChange={handleChange}
-            size="lg"
+            size="md"
+            fontSize="sm"
           />
         </FormControl>
 
         <FormControl isRequired>
-          <FormLabel fontSize="md">Financial Period</FormLabel>
+          <FormLabel fontSize="sm">Financial Period</FormLabel>
           <Input
             name="financial_period"
-            placeholder="e.g., Q4 2024"
+            placeholder="e.g., Q4 2023, FY 2023, Last 3 Quarters"
             value={formData.financial_period}
             onChange={handleChange}
-            size="lg"
+            size="md"
+            fontSize="sm"
           />
         </FormControl>
 
         <FormControl isRequired>
-          <FormLabel fontSize="md">Analysis Focus Areas</FormLabel>
+          <FormLabel fontSize="sm">Analysis Focus Areas</FormLabel>
           <Textarea
             name="focus_areas"
-            placeholder="e.g., Revenue Growth, Profit Margins, Debt Levels, Market Expansion"
+            placeholder="e.g., Revenue Growth, Operating Margins, Market Share, R&D Spending, Debt Levels, Cash Flow, Competition Analysis"
             value={formData.focus_areas}
             onChange={handleChange}
-            minH="120px"
-            size="lg"
+            minH="100px"
+            size="md"
+            fontSize="sm"
           />
         </FormControl>
 
         <FormControl isRequired>
-          <FormLabel fontSize="md">Analysis Objectives</FormLabel>
+          <FormLabel fontSize="sm">Analysis Objectives</FormLabel>
           <Textarea
             name="objectives"
-            placeholder="e.g., Summarize key highlights, identify strengths and weaknesses"
+            placeholder="e.g., Assess financial health, Evaluate competitive position, Identify growth trends, Analyze risk factors, Investment potential"
             value={formData.objectives}
             onChange={handleChange}
-            minH="120px"
-            size="lg"
+            minH="100px"
+            size="md"
+            fontSize="sm"
           />
         </FormControl>
 
         <Button
           type="submit"
           colorScheme="blue"
-          size="lg"
+          size="md"
           isLoading={isLoading}
           loadingText="Analyzing..."
-          py={7}
+          py={6}
+          borderWidth="1px"
+          borderColor="gray.200"
+          fontSize="sm"
         >
           🚀 Run Analysis
         </Button>
-      </Stack>
+      </VStack>
     </Box>
   );
 }; 

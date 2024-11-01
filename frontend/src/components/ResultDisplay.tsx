@@ -5,16 +5,6 @@ interface ResultDisplayProps {
 }
 
 export const ResultDisplay = ({ result }: ResultDisplayProps) => {
-  // Try to parse the result as JSON if it's a JSON string
-  const formatResult = (rawResult: string) => {
-    try {
-      const parsed = JSON.parse(rawResult);
-      return JSON.stringify(parsed, null, 2);
-    } catch {
-      return rawResult;
-    }
-  };
-
   return (
     <Box
       p={6}
@@ -23,21 +13,28 @@ export const ResultDisplay = ({ result }: ResultDisplayProps) => {
       shadow="sm"
       border="1px"
       borderColor="gray.200"
-      height="800px"
+      height="930px"
       overflowY="auto"
       textAlign="left"
     >
       {result ? (
         <Box 
           whiteSpace="pre-wrap" 
-          fontSize="md" 
+          fontSize="sm"
           fontFamily="monospace"
           p={4}
         >
-          {formatResult(result)}
+          {result}
         </Box>
       ) : (
-        <Text color="gray.500">Analysis results will appear here...</Text>
+        <Text color="gray.500" fontSize="sm">
+          Your analysis results will appear here. The AI crew will provide a detailed report including:
+          • Executive Summary
+          • Key Financial Metrics
+          • Market Analysis
+          • Risk Assessment
+          • Recommendations
+        </Text>
       )}
     </Box>
   );
