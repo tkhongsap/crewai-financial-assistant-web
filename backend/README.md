@@ -1,108 +1,57 @@
-# 💼 AI Financial Analysis Crew
+# AI Financial Analysis Crew - Backend
 
-## 🚀 Overview
-AI Financial Analysis Crew is a sophisticated financial analysis tool powered by CrewAI that automates comprehensive financial report analysis. It employs multiple AI agents working in concert to research, analyze, and generate detailed financial reports.
+## Overview
+Backend service for the AI Financial Analysis Crew application. Handles API requests, AI agent coordination, and data processing.
 
-## 🤖 Key Features
-- **Automated Research**: Gathers and analyzes financial data from multiple sources
-- **Intelligent Analysis**: Processes financial statements with focus on key metrics
-- **Custom Reports**: Generates detailed reports with executive summaries and insights
-- **Multi-Agent System**: Leverages specialized AI agents for different aspects of analysis
-- **Web Interface**: User-friendly Streamlit interface for easy interaction
+## Tech Stack
+- Node.js
+- Express
+- OpenAI GPT-4
+- CrewAI
 
-## 🛠️ Installation
+## Setup
+1. Install dependencies:
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/crewai_financial_analyst.git
-cd crewai_financial_analyst
-
-# Install the package and dependencies
-pip install .
+npm install
 ```
 
-## 🔑 Configuration
-
-1. Create a `.env` file in the root directory:
+2. Configure environment variables:
 ```bash
 OPENAI_API_KEY=your_openai_api_key
 SERPER_API_KEY=your_serper_api_key
-OPENAI_MODEL_NAME=gpt-4o-mini
+OPENAI_MODEL_NAME=your_preferred_model
 ```
 
-2. For Streamlit, create `.streamlit/secrets.toml`:
-```toml
-OPENAI_API_KEY = "your_key_here"
-SERPER_API_KEY = "your_key_here"
-OPENAI_MODEL_NAME = "gpt-4o-mini"
-```
-
-## 🚀 Usage
-
-### Web Interface
-Launch the Streamlit application:
+3. Start development server:
 ```bash
-streamlit run src/crewai_financial_analyst/streamlit_app.py
+npm run dev
 ```
 
-### Command Line Interface
-Available commands:
-```bash
-# Run analysis
-crewai run
+## API Endpoints
 
-# Train the crew
-crewai train
-
-# Test the system
-crewai test
-
-# Replay specific tasks
-crewai replay
+### Health Check
 ```
-
-## 📊 Features in Detail
-
-### Analysis Capabilities
-- Financial Statement Analysis
-- Market Trend Analysis
-- Performance Metrics Evaluation
-- Risk Assessment
-- Growth Opportunity Identification
-
-### AI Agents
-1. **Researcher**: Gathers financial data and market information
-2. **Analyst**: Processes and analyzes financial metrics
-3. **Report Writer**: Generates comprehensive financial reports
-
-## 📁 Project Structure
+GET /api/health
 ```
-crewai_financial_analyst/
-├── src/
-│   └── crewai_financial_analyst/
-│       ├── config/
-│       │   ├── agents.yaml    # Agent configurations
-│       │   └── tasks.yaml     # Task definitions
-│       ├── output/            # Generated reports
-│       ├── crew.py           # Core crew implementation
-│       ├── main.py           # CLI entry point
-│       └── streamlit_app.py  # Web interface
-├── scripts/
-│   └── update_readme.py      # README generator
-├── .env                      # Environment variables
-├── .streamlit/
-│   ├── config.toml          # Streamlit configuration
-│   └── secrets.toml         # Streamlit secrets
-├── Dockerfile               # Container configuration
-├── pyproject.toml          # Project dependencies
-└── README.md               # This file
+Returns server health status.
+
+### Analysis
 ```
+POST /api/analyze
+```
+Performs financial analysis based on provided parameters:
+- topic
+- financial_period
+- focus_areas
+- objectives
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Deployment
+The backend is configured for deployment on Railway using Docker. The deployment process is automated through the Dockerfile and railway.toml configuration.
 
-## 📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Development
+- Use `npm run dev` for development with hot-reload
+- Use `npm start` for production
 
-## 🔄 Last Updated
-2024-10-30 17:35:19
+## Contributing
+Please refer to the main README.md for contribution guidelines.

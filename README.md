@@ -1,139 +1,141 @@
 # 💼 AI Financial Analysis Crew
 
 ## 🚀 Overview
+AI Financial Analysis Crew is a modern web application featuring autonomous AI agents that work together to deliver comprehensive financial analysis. The system leverages CrewAI to coordinate multiple AI agents that research, analyze, and generate detailed financial reports by collecting real-time data from various internet sources.
 
-AI Financial Analysis Crew is a sophisticated financial analysis tool powered by CrewAI that automates comprehensive financial report analysis. It employs multiple AI agents working in concert to research, analyze, and generate detailed financial reports.
+## 🤖 System Architecture
+- **Frontend**: React + TypeScript + Chakra UI
+- **Backend**: Node.js + Express
+- **AI Engine**: CrewAI + OpenAI GPT-4
+- **Deployment**: Railway + Docker
 
-## 🤖 Key Features
-
-- **Automated Research**: Gathers and analyzes financial data from multiple sources
-- **Intelligent Analysis**: Processes financial statements with focus on key metrics
-- **Custom Reports**: Generates detailed reports with executive summaries and insights
-- **Multi-Agent System**: Leverages specialized AI agents for different aspects of analysis
-- **Web Interface**: User-friendly Streamlit interface for easy interaction
+## 📁 Project Structure
+```
+crewai-financial-assistant-web/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── AnalysisForm.tsx    # Analysis input form
+│   │   │   ├── Header.tsx          # Application header
+│   │   │   ├── ResultDisplay.tsx   # Analysis results display
+│   │   │   └── StatusDisplay.tsx   # Agent status indicators
+│   │   ├── App.tsx                 # Main application component
+│   │   └── index.tsx               # Application entry point
+│   └── package.json
+├── backend/
+│   ├── src/
+│   │   ├── app.js                  # Express application setup
+│   │   └── routes/
+│   │       └── health.js           # Health check endpoint
+│   └── package.json
+├── Dockerfile                      # Multi-stage build configuration
+└── railway.toml                    # Railway deployment configuration
+```
 
 ## 🛠️ Installation
 
-### Backend
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Docker (optional)
 
+### Backend Setup
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/crewai_financial_analyst.git
-    cd crewai_financial_analyst/backend
-    ```
-
-2. Install the package and dependencies:
-    ```bash
-    pip install .
-    ```
-
-### Frontend
-
-1. Navigate to the frontend directory:
-    ```bash
-    cd ../frontend
-    ```
+```bash
+git clone https://github.com/yourusername/crewai-financial-assistant-web.git
+cd crewai-financial-assistant-web/backend
+```
 
 2. Install dependencies:
-    ```bash
-    npm install
-    ```
-
-## 🔑 Configuration
-
-### Backend
-
-1. Create a `.env` file in the `backend` directory:
-    ```bash
-    OPENAI_API_KEY=your_openai_api_key
-    SERPER_API_KEY=your_serper_api_key
-    OPENAI_MODEL_NAME=gpt-4o-mini
-    ```
-
-2. For Streamlit, create `.streamlit/secrets.toml`:
-    ```toml
-    OPENAI_API_KEY = "your_key_here"
-    SERPER_API_KEY = "your_key_here"
-    OPENAI_MODEL_NAME = "gpt-4o-mini"
-    ```
-
-### Frontend
-
-1. Create a `.env` file in the `frontend` directory:
-    ```bash
-    REACT_APP_API_URL=http://localhost:8000
-    ```
-
-## 🚀 Usage
-
-### Backend
-
-#### Web Interface
-
-Launch the Streamlit application:
 ```bash
-streamlit run [streamlit_app.py](http://_vscodecontentref_/1)
+npm install
+```
 
-Command Line Interface
-Available commands:
+3. Create a `.env` file:
+```bash
+OPENAI_API_KEY=your_openai_api_key
+SERPER_API_KEY=your_serper_api_key
+OPENAI_MODEL_NAME=gpt-4o-mini
+PORT=3001
+```
 
-# Run analysis
-crewai run
-# Train the crew
-crewai train
-# Test the system
-crewai test
-# Replay specific tasks
-crewai replay
+### Frontend Setup
+1. Navigate to frontend directory:
+```bash
+cd ../frontend
+```
 
-Frontend
-In the frontend directory, you can run:
+2. Install dependencies:
+```bash
+npm install
+```
 
-npm start
-Runs the app in the development mode.
-Open http://localhost:3000 to view it in your browser.
+## 🚀 Development
 
-The page will reload when you make changes.
-You may also see any lint errors in the console.
+### Running Backend
+```bash
+cd backend
+npm run dev    # Runs with nodemon for development
+# or
+npm start      # Runs without hot reload
+```
 
-npm test
-Launches the test runner in the interactive watch mode.
-See the section about running tests for more information.
+### Running Frontend
+```bash
+cd frontend
+npm start      # Starts development server on port 3000
+```
 
-npm run build
-Builds the app for production to the build folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📊 Features in Detail
 
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+### AI Agents
+1. **Researcher**: 
+   - Gathers financial data from multiple sources
+   - Collects market information and news
+   - Analyzes company documents
 
-See the section about deployment for more information.
+2. **Analyst**:
+   - Processes collected data
+   - Performs financial analysis
+   - Identifies trends and patterns
 
-npm run eject
-Note: this is a one-way operation. Once you eject, you can’t go back!
+3. **Report Writer**:
+   - Generates comprehensive reports
+   - Creates executive summaries
+   - Provides actionable insights
 
-If you aren’t satisfied with the build tool and configuration choices, you can eject at any time. This command will remove the single build dependency from your project.
+## 🔌 API Endpoints
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except eject will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Health Check
+```
+GET /api/health
+Response: { status: 'healthy' }
+```
 
-You don’t have to ever use eject. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However, we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Analysis
+```
+POST /api/analyze
+Body: {
+  topic: string,          // e.g., "Apple Inc. Quarterly Performance"
+  financial_period: string, // e.g., "Q4 2023"
+  focus_areas: string,    // e.g., "Revenue Growth, Market Share"
+  objectives: string      // e.g., "Assess financial health"
+}
+```
 
-📊 Features in Detail
-Analysis Capabilities
-Financial Statement Analysis
-Market Trend Analysis
-Performance Metrics Evaluation
-Risk Assessment
-Growth Opportunity Identification
-AI Agents
-Researcher: Gathers financial data and market information
-Analyst: Processes and analyzes financial metrics
-Report Writer: Generates comprehensive financial reports
+## 🚢 Deployment
+The application is configured for deployment on Railway:
+- Multi-stage Docker builds for optimized images
+- Automated health checks
+- Environment variable management
+- Continuous deployment from main branch
 
+## 🤝 Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-
-🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-📝 License
+## 📝 License
 This project is licensed under the MIT License - see the LICENSE file for details.
