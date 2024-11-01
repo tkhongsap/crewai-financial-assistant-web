@@ -13,7 +13,7 @@ export const ResultDisplay = ({ result }: ResultDisplayProps) => {
       shadow="sm"
       border="1px"
       borderColor="gray.200"
-      height="930px"
+      height="900px"
       overflowY="auto"
       textAlign="left"
     >
