@@ -1,9 +1,8 @@
 [build]
 builder = "DOCKERFILE"
-buildCommand = "docker build -t app ."
 
 [deploy]
-startCommand = "docker run -p ${PORT}:3001 app"
+startCommand = "npm start"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
