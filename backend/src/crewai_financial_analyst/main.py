@@ -4,7 +4,7 @@
 import sys
 import json
 import io
-from crewai_financial_analyst.crew import CrewaiFinancialAnalystCrew
+from crew import CrewaiFinancialAnalystCrew
 from dotenv import load_dotenv
 
 # Set up UTF-8 encoding for input/output

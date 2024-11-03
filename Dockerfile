@@ -26,13 +26,21 @@ COPY backend/ .
 # Copy built frontend files
 COPY --from=frontend-builder /app/frontend/build ./public
 
+# Set up Python package
+RUN mkdir -p /app/src/crewai_financial_analyst
+COPY backend/src/crewai_financial_analyst /app/src/crewai_financial_analyst/
+
 # Install Python dependencies
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Create empty __init__.py files
+RUN touch /app/src/__init__.py
+RUN touch /app/src/crewai_financial_analyst/__init__.py
+
 # Set environment variables
 ENV NODE_ENV=production
-ENV PYTHONPATH=/app/src
+ENV PYTHONPATH=/app:/app/src
 
 # Expose the port
 EXPOSE 3001

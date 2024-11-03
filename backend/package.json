@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/app.js",
   "scripts": {
-    "start": "cross-env PYTHONPATH=. node src/app.js",
+    "start": "cross-env PYTHONPATH=/app:/app/src node src/app.js",
     "dev": "cross-env PYTHONPATH=. nodemon src/app.js"
   },
   "dependencies": {
