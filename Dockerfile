@@ -38,4 +38,4 @@ ENV PYTHONPATH=/app/src
 EXPOSE 3001
 
 # Start the application
-CMD ["npm", "start"] 
+CMD ["npm", "start"]
