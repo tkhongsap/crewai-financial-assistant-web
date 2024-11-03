@@ -24,7 +24,10 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Enable CORS with specific options
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'https://brightify-snap-financial-assistant-crew-production.up.railway.app'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
