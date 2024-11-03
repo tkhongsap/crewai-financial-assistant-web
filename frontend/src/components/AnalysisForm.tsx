@@ -7,6 +7,7 @@ import {
   Button,
   Box,
   VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -23,8 +24,21 @@ export const AnalysisForm = ({ onSubmit, isLoading }: AnalysisFormProps) => {
     objectives: '',
   });
 
+  const toast = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.topic || !formData.financial_period || !formData.focus_areas || !formData.objectives) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fill in all required fields',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+    
     onSubmit(formData);
   };
 

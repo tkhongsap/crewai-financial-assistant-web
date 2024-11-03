@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "start": "cross-env PYTHONPATH=. node src/app.js",
+    "dev": "cross-env PYTHONPATH=. nodemon src/app.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "path": "^0.12.7"
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
   }
-} 
+}

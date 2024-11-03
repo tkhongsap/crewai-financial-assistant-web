@@ -1,48 +1,61 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
+import json
+import io
 from crewai_financial_analyst.crew import CrewaiFinancialAnalystCrew
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Set up UTF-8 encoding for input/output
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
-# Define the input for the crew's tasks once at the top
-inputs = {
-    'topic': 'NVIDIA Financial Report Analysis',
-    'financial_period': 'Q4 2024',
-    'focus_areas': 'The latest on financial statements, focusing on Revenue Growth, Profit Margins, Debt Levels, Market Expansion',
-    'objectives': 'Summarize key highlights of the latest financial report, identify strengths and weaknesses in financial performance',      
-}
+def serialize_output(result):
+    """Helper function to serialize any output type"""
+    if hasattr(result, 'dict'):
+        return result.dict()
+    elif hasattr(result, '__dict__'):
+        return {
+            'output': str(result),
+            'details': result.__dict__
+        }
+    elif isinstance(result, (list, tuple)):
+        return [str(item) for item in result]
+    else:
+        return str(result)
 
-def run():
-    """
-    Run the crew.
-    """
-    CrewaiFinancialAnalystCrew().crew().kickoff(inputs=inputs)
-
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
+def analyze(input_json):
+    """Run the analysis with the provided input"""
     try:
-        CrewaiFinancialAnalystCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+        inputs = json.loads(input_json)
+        crew = CrewaiFinancialAnalystCrew()
+        result = crew.kickoff(inputs)
+        
+        output_dict = {
+            'analysis': serialize_output(result)
+        }
+            
+        print(json.dumps(output_dict, ensure_ascii=False, default=str))
+        return 0
+        
     except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
+        error_msg = str(e).encode('utf-8', errors='replace').decode('utf-8')
+        print(json.dumps({'error': error_msg}), file=sys.stderr)
+        return 1
 
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        CrewaiFinancialAnalystCrew().crew().replay(task_id=sys.argv[1])
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and return the results.
-    """
-    try:
-        CrewaiFinancialAnalystCrew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+if __name__ == "__main__":
+    load_dotenv()
+    
+    if len(sys.argv) < 3:
+        print("Usage: main.py <command> <input_json>", file=sys.stderr)
+        sys.exit(1)
+    
+    command = sys.argv[1]
+    input_json = sys.argv[2]
+    
+    if command == "analyze":
+        sys.exit(analyze(input_json))
+    else:
+        print(f"Unknown command: {command}", file=sys.stderr)
+        sys.exit(1)

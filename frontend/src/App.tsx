@@ -13,7 +13,7 @@ import { StatusDisplay } from './components/StatusDisplay';
 import { ResultDisplay } from './components/ResultDisplay';
 import { Header } from './components/Header';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 // Create a custom theme
 const theme = extendTheme({});
@@ -26,27 +26,51 @@ export const App = () => {
   const handleAnalysis = async (formData: any) => {
     try {
       setStatus('analyzing');
+      console.log('Sending request to:', `${API_URL}/api/analyze`);
+      console.log('Request data:', formData);
+
       const response = await fetch(`${API_URL}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(formData),
       });
       
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
       
       if (!response.ok) {
         throw new Error(data.detail || 'Analysis failed');
       }
       
-      setResult(typeof data.result === 'string' ? data.result : JSON.stringify(data.result, null, 2));
+      let resultText = '';
+      if (data.result) {
+        if (data.result.analysis) {
+          resultText = data.result.analysis;
+        } else if (data.result.final_output) {
+          resultText = data.result.final_output;
+        } else if (data.result.raw_output) {
+          resultText = data.result.raw_output;
+        } else if (Array.isArray(data.result.tasks_output)) {
+          resultText = data.result.tasks_output.join('\n\n');
+        } else if (typeof data.result === 'string') {
+          resultText = data.result;
+        } else {
+          resultText = JSON.stringify(data.result, null, 2);
+        }
+      }
+      
+      setResult(resultText);
       setStatus('complete');
     } catch (error: any) {
+      console.error('Analysis error:', error);
       setStatus('error');
       toast({
         title: 'Error',
-        description: error?.message || 'An error occurred',
+        description: error?.message || 'Failed to connect to the server. Please try again.',
         status: 'error',
         duration: 9000,
         isClosable: true,
